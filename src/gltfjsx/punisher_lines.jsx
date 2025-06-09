@@ -14,7 +14,7 @@ export function Model(props) {
       <lineSegments geometry={new THREE.EdgesGeometry(nodes.Cube.geometry, 30)}>
         <lineBasicMaterial color="black" />
       </lineSegments>
-            <lineSegments geometry={new THREE.EdgesGeometry(nodes.Selection001.geometry, 30)} position={[0, 0.01, 0]}>
+      <lineSegments geometry={new THREE.EdgesGeometry(nodes.Selection001.geometry, 30)} position={[0, 0.01, 0]}>
         <lineBasicMaterial color="black" />
       </lineSegments>
     </group>
