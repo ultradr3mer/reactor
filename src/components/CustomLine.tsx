@@ -6,7 +6,7 @@ import glsl from 'babel-plugin-glsl/macro'
 import { Mesh } from 'three'
 import { ReactThreeFiber } from '@react-three/fiber'
 import React from 'react'
-import ProcessEdge from '../edges/EdgeProcessor'
+import ProcessEdge from '../geometry/EdgeProcessor'
 
 // Define the custom shader material's uniforms
 const CustomBoxMaterial = shaderMaterial(
@@ -26,19 +26,17 @@ const CustomBoxMaterial = shaderMaterial(
       vec4 currentPos = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       vec4 otherPos = projectionMatrix * modelViewMatrix * vec4(other, 1.0);
 
-      // From clip to NDC
       vec2 currentNDC = currentPos.xy / currentPos.w;
       vec2 otherNDC = otherPos.xy / otherPos.w;
 
-      vec2 dir = normalize(currentNDC - otherNDC); // line direction in screen space
+      vec2 dir = normalize(currentNDC - otherNDC); 
       vec2 normal = vec2(-dir.y, dir.x); // perpendicular direction
 
-      // Offset in screen space (NDC)
       vec2 offsetVec = normal * direction * width / resolution.xy;
 
       vec4 finalPos = currentPos;
       finalPos.xy += offsetVec * finalPos.w;
-      finalPos.z -= 0.002 / currentPos.w; // Slightly offset to avoid z-fighting
+      finalPos.z -= 0.002 / currentPos.w; 
 
       gl_Position = finalPos;
     }
