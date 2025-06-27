@@ -15,7 +15,8 @@ const ProjectorMaterial = shaderMaterial(
     width: 0,
     resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
     colorMap: null,
-    depthMap: null
+    depthMap: null,
+    color: new THREE.Vector4(1, 1, 1, 1) // Default color
   },
   // Vertex Shader
   glsl`
@@ -49,10 +50,10 @@ const ProjectorMaterial = shaderMaterial(
   glsl`
     uniform sampler2D colorMap;
     varying vec2 vUv;
+    uniform vec4 color;
 
     void main() {
-      vec4 color = texture2D(colorMap, vUv);
-      gl_FragColor = color;
+      gl_FragColor = vec4(texture2D(colorMap, vUv).rgb * color.rgb, 1.0);
     }
   `
 )
@@ -77,6 +78,7 @@ type ProjectorProps = {
   depthMap: THREE.Texture,
   scale?: number,
   position?: THREE.Vector3 | [number, number, number],
+  color?: THREE.Vector4 | [number, number, number, number]
 }
 
 export default function Projector(props: ProjectorProps) {
@@ -88,6 +90,11 @@ export default function Projector(props: ProjectorProps) {
       materialRef.current.uniforms.resolution.value.set(size.width, size.height);
       materialRef.current.uniforms.colorMap.value = props.colorMap;
       materialRef.current.uniforms.depthMap.value = props.depthMap;
+
+      if(props.color != undefined) 
+      {
+        materialRef.current.uniforms.color.value = props.color;
+      }
     }
   }, [size, props.colorMap, props.depthMap]);
 
@@ -101,8 +108,6 @@ export default function Projector(props: ProjectorProps) {
     <mesh {...props} geometry={ProjectionGeometry(2048)}>
       <projectorMaterial
           ref={materialRef}
-          transparent
-          blending={THREE.NormalBlending}
         />
     </mesh>
   )

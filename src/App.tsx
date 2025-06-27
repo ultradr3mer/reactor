@@ -26,7 +26,7 @@ function Scene() {
     <>
       <Projector colorMap={useLoader(TextureLoader, '/color-0.png')} depthMap={useLoader(EXRLoader, '/depth-0.exr')} />
       <Projector colorMap={useLoader(TextureLoader, '/color-1.png')} depthMap={useLoader(EXRLoader, '/depth-1.exr')} />
-      <Projector colorMap={useLoader(TextureLoader, '/color-2.png')} depthMap={useLoader(EXRLoader, '/depth-2.exr')} />
+      <Projector colorMap={useLoader(TextureLoader, '/color-2.png')} depthMap={useLoader(EXRLoader, '/depth-2.exr')} color={[1.0,0.5,0.0,1.0]} />
       <Projector colorMap={useLoader(TextureLoader, '/color-3.png')} depthMap={useLoader(EXRLoader, '/depth-3.exr')} />
       <Projector colorMap={useLoader(TextureLoader, '/color-4.png')} depthMap={useLoader(EXRLoader, '/depth-4.exr')} />
       <OrbitControls />
